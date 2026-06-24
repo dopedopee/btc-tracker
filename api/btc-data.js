@@ -1,9 +1,14 @@
 const SYMBOL = "BTCUSDT";
 
+/** Spot market data — no API key, geo-restriction-free (US-accessible) */
+const SPOT_API = "https://data-api.binance.vision";
+/** Futures market data via Binance web gateway (fapi.binance.com alternative) */
+const FUTURES_API = "https://www.binance.com";
+
 const BINANCE = {
-  price: `https://fapi.binance.com/fapi/v1/ticker/price?symbol=${SYMBOL}`,
-  openInterest: `https://fapi.binance.com/fapi/v1/openInterest?symbol=${SYMBOL}`,
-  premiumIndex: `https://fapi.binance.com/fapi/v1/premiumIndex?symbol=${SYMBOL}`,
+  price: `${SPOT_API}/api/v3/ticker/price?symbol=${SYMBOL}`,
+  openInterest: `${FUTURES_API}/fapi/v1/openInterest?symbol=${SYMBOL}`,
+  premiumIndex: `${FUTURES_API}/fapi/v1/premiumIndex?symbol=${SYMBOL}`,
 };
 
 /** Node.js 18+ built-in fetch (globalThis.fetch) */
