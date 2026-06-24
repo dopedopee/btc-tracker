@@ -1,13 +1,7 @@
 const STORAGE_KEY = "btc-tracker-history";
 const FETCH_INTERVAL_MS = 5 * 60 * 1000;
 const MAX_RECORDS = 2016; // 7 days at 5-min intervals
-const SYMBOL = "BTCUSDT";
-
-const API = {
-  price: `https://fapi.binance.com/fapi/v1/ticker/price?symbol=${SYMBOL}`,
-  openInterest: `https://fapi.binance.com/fapi/v1/openInterest?symbol=${SYMBOL}`,
-  premiumIndex: `https://fapi.binance.com/fapi/v1/premiumIndex?symbol=${SYMBOL}`,
-};
+const API = "/api/btc-data";
 
 const chartDefaults = {
   responsive: true,
@@ -254,27 +248,19 @@ async function fetchData() {
   setStatus("loading", "데이터 가져오는 중...");
 
   try {
-    const [priceRes, oiRes, fundingRes] = await Promise.all([
-      fetch(API.price),
-      fetch(API.openInterest),
-      fetch(API.premiumIndex),
-    ]);
+    const res = await fetch(API);
 
-    if (!priceRes.ok || !oiRes.ok || !fundingRes.ok) {
+    if (!res.ok) {
       throw new Error("API 응답 오류");
     }
 
-    const [priceData, oiData, fundingData] = await Promise.all([
-      priceRes.json(),
-      oiRes.json(),
-      fundingRes.json(),
-    ]);
+    const data = await res.json();
 
     const record = {
-      ts: Date.now(),
-      price: parseFloat(priceData.price),
-      oi: parseFloat(oiData.openInterest),
-      fundingRate: parseFloat(fundingData.lastFundingRate),
+      ts: data.ts ?? Date.now(),
+      price: data.price,
+      oi: data.oi,
+      fundingRate: data.fundingRate,
     };
 
     history.push(record);
