@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTC Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">₿</div>
+        <div>
+          <h1>BTC Tracker</h1>
+          <p class="subtitle">Binance Futures · BTCUSDT</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="status" id="status">
+          <span class="status-dot"></span>
+          <span id="status-text">연결 중...</span>
+        </div>
+        <p class="last-update">마지막 업데이트: <span id="last-update">—</span></p>
+        <p class="next-update">다음 업데이트: <span id="next-update">—</span></p>
+      </div>
+    </header>
+
+    <section class="metrics">
+      <article class="metric-card metric-price">
+        <div class="metric-label">현재 가격</div>
+        <div class="metric-value" id="current-price">—</div>
+        <div class="metric-unit">USDT</div>
+      </article>
+      <article class="metric-card metric-oi">
+        <div class="metric-label">미결제약정 (OI)</div>
+        <div class="metric-value" id="current-oi">—</div>
+        <div class="metric-unit">BTC</div>
+      </article>
+      <article class="metric-card metric-funding">
+        <div class="metric-label">펀딩비</div>
+        <div class="metric-value" id="current-funding">—</div>
+        <div class="metric-unit">8h 기준</div>
+      </article>
+    </section>
+
+    <section class="charts">
+      <article class="chart-card">
+        <div class="chart-header">
+          <h2>가격</h2>
+          <span class="chart-badge">USDT</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="price-chart"></canvas>
+        </div>
+      </article>
+      <article class="chart-card">
+        <div class="chart-header">
+          <h2>미결제약정 (OI)</h2>
+          <span class="chart-badge">BTC</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="oi-chart"></canvas>
+        </div>
+      </article>
+      <article class="chart-card">
+        <div class="chart-header">
+          <h2>펀딩비</h2>
+          <span class="chart-badge">%</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="funding-chart"></canvas>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span id="record-count">기록 0건</span>
+      <span>5분마다 자동 갱신 · localStorage 저장</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
